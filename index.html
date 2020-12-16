@@ -92,7 +92,11 @@
             <!-- <a-video video-player></a-video> -->
             
             <!-- https://github.com/nikolaiwarner/aframe-chromakey-material -->
-            <a-entity material="shader: chromakey; src: #video; color: 0.1 0.9 0.2" geometry="primitive: box">
+            <!-- https://aframe.io/docs/1.1.0/components/geometry.html#plane -->
+            <a-entity 
+                material="shader: chromakey; src: #video; color: 0.1 0.9 0.2; side: double" 
+                geometry="primitive: plane; height: 1; width: 1"
+                rotation="-90 0 0">
             </a-entity>
         </a-marker>
 
