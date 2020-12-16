@@ -3,82 +3,96 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
     <title>Marker</title>
 
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="./js/aframe-chromakey-material.min.js"></script>
 
     <!-- https://aframe.io/docs/1.1.0/introduction/writing-a-component.html -->
     <script>
         AFRAME.registerComponent('video-player', {
-            // schema: {
-            //     src: "#video",
-            //     width: "4",
-            //     height: "2.25",
-            //     position: "0 0 0",
-            //     rotation: "-45 0 0"
-            // },
-
-            init: function() {
+            init: function () {
                 this.el.setAttribute('src', '#video');
                 this.el.setAttribute('width', '4');
                 this.el.setAttribute('height', '2.25');
                 this.el.setAttribute('position', '0 0 0');
                 this.el.setAttribute('rotation', '-75 0 0');
+
                 // this.el.object3D.position = '0 0 0';
                 // this.el.object3D.rotation = '-45 0 0';
             }
-
         });
     </script>
 
 </head>
 
 
-<!-- https://stackoverflow.com/questions/62322532/how-to-improve-marker-detection-on-mobile-browser-with-ar-js -->
 <!-- https://www.youtube.com/playlist?list=PL8MkBHej75fJD-HveDzm4xKrciC5VfYuV -->
+<!-- https://github.com/mayognaise/aframe-gif-shader -->
+
 
 
 <body style="margin: 0px; overflow: hidden;">
 
     <!-- https://medium.com/chialab-open-source/10-tips-to-enhance-your-ar-js-app-8b44c6faffca -->
-    <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 960; displayWidth: 1280; displayHeight: 960;">
+    <a-scene embedded
+        arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 960; displayWidth: 1280; displayHeight: 960;">
 
         <!-- https://www.youtube.com/watch?v=5KjyTU07EHo -->
         <!-- https://aframe.io/docs/1.1.0/guides/building-a-minecraft-demo.html#preloading-assets -->
         <!-- Assets Management System -->
         <a-assets>
             <video id="video" src="./assets/videos/lonrot bailando raro.mp4" loop="false"></video>
-            <!-- <video id="video" src="./assets/videos/video.mp4" loop="false"></video> -->
+            <!-- <video id="video" src="./assets/videos/kung-fu-panda.gif" loop="false"></video> -->
         </a-assets>
 
         <!-- https://medium.com/swlh/ar-js-the-simplest-way-to-get-cross-browser-augmented-reality-on-the-web-10cbc721debc -->
         <!-- https://github.com/jeromeetienne/AR.js/issues/164 -->
-        <a-marker 
-            preset="custom" 
-            type="pattern" 
-            url="./assets/markers/pattern-marker.patt" 
+        <!-- https://www.youtube.com/watch?v=Kt5c3Z8odAo -->
+        <!-- <a-marker
+            preset="custom"
+            type="pattern"
+            url="./assets/markers/pattern-2.patt"
             id="videoMarker"
             size="0.05"
-
         >
-            <!-- Video 16:9 -->
-            <!-- https://www.youtube.com/watch?v=Kt5c3Z8odAo -->
-            <!-- <a-video src="#video" width="4" height="2.25" position="0 0 0" rotation="-45 0 0" video-player></a-video> -->
             <a-video video-player></a-video>
         </a-marker>
 
-        <a-marker 
+        <a-marker
+            preset="custom"
+            type="pattern"
+            url="./assets/markers/pattern-tarjeta.patt"
+            id="videoMarker"
+            size="0.05"
+        >
+            <a-video video-player></a-video>
+        </a-marker> -->
+
+        <!-- <a-marker 
             preset="custom" 
             type="pattern" 
-            url="./assets/markers/pattern-2.patt" 
+            url="./assets/markers/pattern-marker.patt" 
             size="0.05"
         >
             <a-entity position="0 0 0" scale="0.02 0.02 0.02"
                 gltf-model="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf">
+            </a-entity>
+        </a-marker> -->
+
+        <a-marker preset="custom" type="pattern" url="./assets/markers/pattern-marker.patt" id="videoMarker"
+            size="0.05">
+            <!-- https://www.youtube.com/watch?v=Kt5c3Z8odAo -->
+            <!-- Video 16:9 -->
+            <!-- <a-video video-player></a-video> -->
+            
+            <!-- https://github.com/nikolaiwarner/aframe-chromakey-material -->
+            <a-entity material="shader: chromakey; src: #video; color: 0.1 0.9 0.2" geometry="primitive: box">
             </a-entity>
         </a-marker>
 
@@ -86,15 +100,14 @@
 
     </a-scene>
 
-    
     <script>
         // https://stackoverflow.com/questions/44799413/how-to-detect-when-a-marker-is-found-in-ar-js
         var video = document.querySelector('#video');
         var videoMarker = document.querySelector('#videoMarker');
-        videoMarker.addEventListener('markerFound', function() {
+        videoMarker.addEventListener('markerFound', function () {
             video.play();
         });
-        videoMarker.addEventListener('markerLost', function() {
+        videoMarker.addEventListener('markerLost', function () {
             video.pause();
         });
     </script>
